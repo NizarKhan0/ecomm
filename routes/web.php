@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ShippingAreaController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\VendorProductController;
@@ -154,6 +155,32 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::delete('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
     });
 
+    //All Shipping Area Routes
+    Route::controller(ShippingAreaController::class)->group(function () {
+        Route::get('/all/division', 'AllDivision')->name('all.division');
+        Route::get('/add/division', 'AddDivision')->name('add.division');
+        Route::post('/store/division', 'StoreDivision')->name('store.division');
+        Route::get('/edit/division/{id}', 'EditDivision')->name('edit.division');
+        Route::put('/update/division', 'UpdateDivision')->name('update.division');
+        Route::delete('/delete/division/{id}', 'DeleteDivision')->name('delete.division');
+
+        Route::get('/all/district', 'AllDistrict')->name('all.district');
+        Route::get('/add/district', 'AddDistrict')->name('add.district');
+        Route::post('/store/district', 'StoreDistrict')->name('store.district');
+        Route::get('/edit/district/{id}', 'EditDistrict')->name('edit.district');
+        Route::put('/update/district', 'UpdateDistrict')->name('update.district');
+        Route::delete('/delete/district/{id}', 'DeleteDistrict')->name('delete.district');
+
+        Route::get('/all/state', 'AllState')->name('all.state');
+        Route::get('/add/state', 'AddState')->name('add.state');
+        Route::post('/store/state', 'StoreState')->name('store.state');
+        Route::get('/edit/state/{id}', 'EditState')->name('edit.state');
+        Route::put('/update/state', 'UpdateState')->name('update.state');
+        Route::delete('/delete/state/{id}', 'DeleteState')->name('delete.state');
+
+    });
+
+
 
 });
 
@@ -237,11 +264,11 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     // Cart All Route
     Route::controller(CartController::class)->group(function () {
         Route::get('/mycart', 'MyCart')->name('mycart');
-        Route::get('/get-cart-product' , 'GetCartProduct');
-        Route::get('/cart-remove/{rowId}' , 'CartRemove');
+        Route::get('/get-cart-product', 'GetCartProduct');
+        Route::get('/cart-remove/{rowId}', 'CartRemove');
 
-        Route::get('/cart-decrement/{rowId}' , 'CartDecrement');
-        Route::get('/cart-increment/{rowId}' , 'CartIncrement');
+        Route::get('/cart-decrement/{rowId}', 'CartDecrement');
+        Route::get('/cart-increment/{rowId}', 'CartIncrement');
     });
 });
 

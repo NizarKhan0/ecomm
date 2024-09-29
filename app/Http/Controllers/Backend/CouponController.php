@@ -53,6 +53,12 @@ class CouponController extends Controller
     {
         $coupon_id = $request->id;
 
+        $request->validate([
+            'coupon_name' => 'required',
+            'coupon_discount' => 'required',
+            'coupon_validity' => 'required',
+        ]);
+
         Coupon::findOrFail($coupon_id)->update([
             'coupon_name' => strtoupper($request->coupon_name),
             'coupon_discount' => $request->coupon_discount,

@@ -152,5 +152,6 @@ class ShippingAreaController extends Controller
         );
 
         return Redirect()->back()->with($notification);
-    }
+    } // End Method
+
 }

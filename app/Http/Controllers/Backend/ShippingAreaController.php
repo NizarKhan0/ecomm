@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
+use App\Models\ShipState;
 use App\Models\ShipDivision;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\ShipDistricts;
+use App\Http\Controllers\Controller;
 
 class ShippingAreaController extends Controller
 {
@@ -154,4 +155,101 @@ class ShippingAreaController extends Controller
         return Redirect()->back()->with($notification);
     } // End Method
 
+    public function AllState()
+    {
+        $division = ShipDivision::orderBy('division_name', 'ASC')->get();
+        $district = ShipDistricts::orderBy('districts_name', 'ASC')->get();
+        $state = ShipState::latest()->get();
+
+        return view('backend.ship.state.state_all', [
+            'division' => $division,
+            'district' => $district,
+            'state' => $state,
+        ]);
+    }
+
+    public function AddState()
+    {
+        $divisions = ShipDivision::orderBy('division_name', 'ASC')->get();
+        $districts = ShipDistricts::orderBy('districts_name', 'ASC')->get();
+        return view('backend.ship.state.state_add', [
+            'divisions' => $divisions,
+            'districts' => $districts
+        ]);
+    }
+
+    public function StoreState(Request $request)
+    {
+        $request->validate([
+            'division_id' => 'required',
+            'districts_id' => 'required',
+            'states_name' => 'required',
+        ]);
+        ShipState::insert([
+            'division_id' => $request->division_id,
+            'districts_id' => $request->districts_id,
+            'states_name' => $request->states_name,
+            'created_at' => Carbon::now(),
+        ]);
+
+        $notification = array(
+            'message' => 'State Added Successfully',
+            'alert-type' => 'success'
+        );
+        return Redirect()->route('all.state')->with($notification);
+    }
+
+    public function EditState($id)
+    {
+        $divisions = ShipDivision::orderBy('division_name', 'ASC')->get();
+        $districts = ShipDistricts::orderBy('districts_name', 'ASC')->get();
+        $state = ShipState::findOrFail($id);
+        return view('backend.ship.state.state_edit', [
+            'divisions' => $divisions,
+            'districts' => $districts,
+            'state' => $state
+        ]);
+    }
+
+    public function UpdateState(Request $request)
+    {
+        $state_id = $request->id;
+
+        $request->validate([
+            'division_id' => 'required',
+            'districts_id' => 'required',
+            'states_name' => 'required',
+        ]);
+
+        ShipState::findOrFail($state_id)->update([
+            'division_id' => $request->division_id,
+            'districts_id' => $request->districts_id,
+            'states_name' => $request->states_name,
+            'updated_at' => Carbon::now(),
+        ]);
+
+        $notification = array(
+            'message' => 'State Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return Redirect()->route('all.state')->with($notification);
+    }
+
+    public function DeleteState($id)
+    {
+        ShipState::findOrFail($id)->delete();
+        $notification = array(
+            'message' => 'State Deleted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return Redirect()->back()->with($notification);
+    }
+
+    // public function GetDistrict($division_id){
+    //     $dist = ShipDistricts::where('division_id',$division_id)->orderBy('districts_name','ASC')->get();
+    //         return json_encode($dist);
+
+    // }// End Method kalau guna AJAX
 }

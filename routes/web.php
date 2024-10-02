@@ -153,8 +153,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/edit/coupon/{id}', 'EditCoupon')->name('edit.coupon');
         Route::put('/update/coupon', 'UpdateCoupon')->name('update.coupon');
         Route::delete('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
-
-        Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
     });
 
     //All Shipping Area Routes
@@ -247,6 +245,10 @@ Route::post('/add-to-wishlist/{product_id}', [WishlistController::class, 'AddToW
 /// Add to Compare
 Route::post('/add-to-compare/{product_id}', [CompareController::class, 'AddToCompare']);
 
+//Coupon Apply
+Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
+Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
+Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
 
 Route::middleware(['auth', 'role:user'])->group(function () {
 

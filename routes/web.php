@@ -153,6 +153,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/edit/coupon/{id}', 'EditCoupon')->name('edit.coupon');
         Route::put('/update/coupon', 'UpdateCoupon')->name('update.coupon');
         Route::delete('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
+
+        Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
     });
 
     //All Shipping Area Routes

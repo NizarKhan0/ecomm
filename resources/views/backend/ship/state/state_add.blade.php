@@ -64,19 +64,18 @@
                                         </div> --}}
                                     </div>
 
-
                                     <div class="mb-3 row">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Districts Name</h6>
+                                            <h6 class="mb-0">District Name</h6>
                                         </div>
                                         <div class="form-group col-sm-9 text-secondary">
-                                            <select name="districts_id"
+                                            <select name="districts_id" id="districts_add"
                                                 class="form-control @error('districts_id') is-invalid @enderror">
-                                                <option value="">Select Districts</option>
-                                                @foreach ($districts as $district)
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $district)  <!-- Assuming you have a $districts variable -->
                                                     <option value="{{ $district->id }}"
                                                         {{ old('districts_id') == $district->id ? 'selected' : '' }}>
-                                                        {{ $district->districts_name }}
+                                                        {{ $district->districts_name }}  <!-- Assuming the name property is 'district_name' -->
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -86,7 +85,10 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        {{-- <div class="form-group col-sm-9 text-secondary">
+                                    </div>
+
+
+                                    {{-- <div class="form-group col-sm-9 text-secondary">
                                             <select name="districts_id" id="districts" class="form-control @error('districts_id') is-invalid @enderror">
                                                 <option value="">Select District</option>
                                             </select>
@@ -96,7 +98,7 @@
                                                 </div>
                                             @enderror
                                         </div> --}}
-                                    </div>
+
 
                                     <div class="mb-3 row">
                                         <div class="col-sm-3">

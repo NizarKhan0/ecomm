@@ -101,7 +101,7 @@
         </div>
     </div>
 
-    <!-- Store all the districts in a JavaScript object -->
+    {{-- <!-- Store all the districts in a JavaScript object -->
     <script>
         $(document).ready(function() {
             var allDistricts = @json($districts); // Districts loaded from the server
@@ -133,5 +133,5 @@
                 populateDistricts(initialDivision, selectedDistrict);
             }
         });
-    </script>
+    </script> --}}
 @endsection

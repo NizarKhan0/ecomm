@@ -247,9 +247,9 @@ class ShippingAreaController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    // public function GetDistrict($division_id){
-    //     $dist = ShipDistricts::where('division_id',$division_id)->orderBy('districts_name','ASC')->get();
-    //         return json_encode($dist);
+    public function GetDistrict($division_id){
+        $dist = ShipDistricts::where('division_id',$division_id)->orderBy('districts_name','ASC')->get();
+            return json_encode($dist);
 
-    // }// End Method kalau guna AJAX
+    }// End Method kalau guna AJAX
 }

@@ -30,7 +30,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Division Name</h6>
                                         </div>
-                                        {{-- <div class="form-group col-sm-9 text-secondary">
+                                        <div class="form-group col-sm-9 text-secondary">
                                             <select name="division_id"
                                                 class="form-control @error('division_id') is-invalid @enderror">
                                                 <option value="">Select Division</option>
@@ -46,8 +46,8 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                        </div> --}}
-                                        <div class="form-group col-sm-9 text-secondary">
+                                        </div>
+                                        {{-- <div class="form-group col-sm-9 text-secondary">
                                             <select name="division_id" id="division" class="form-control @error('division_id') is-invalid @enderror">
                                                 <option value="">Select Division</option>
                                                 @foreach ($divisions as $division)
@@ -61,7 +61,7 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                     </div>
 
 
@@ -69,7 +69,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Districts Name</h6>
                                         </div>
-                                        {{-- <div class="form-group col-sm-9 text-secondary">
+                                        <div class="form-group col-sm-9 text-secondary">
                                             <select name="districts_id"
                                                 class="form-control @error('districts_id') is-invalid @enderror">
                                                 <option value="">Select Districts</option>
@@ -85,8 +85,8 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                        </div> --}}
-                                        <div class="form-group col-sm-9 text-secondary">
+                                        </div>
+                                        {{-- <div class="form-group col-sm-9 text-secondary">
                                             <select name="districts_id" id="districts" class="form-control @error('districts_id') is-invalid @enderror">
                                                 <option value="">Select District</option>
                                             </select>
@@ -95,7 +95,7 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     <div class="mb-3 row">
@@ -133,7 +133,7 @@
 
 
     {{-- cara 1 kalau nak guna AJAX --}}
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             $('select[name="division_id"]').on('change', function() {
                 var division_id = $(this).val();
@@ -162,9 +162,9 @@
                 }
             });
         });
-    </script> --}}
+    </script>
 
-    <!-- Store all the districts in a JavaScript object -->
+    {{-- <!-- Store all the districts in a JavaScript object -->
     <script>
         $(document).ready(function() {
             var allDistricts = @json($districts); // Districts loaded from the server
@@ -184,5 +184,5 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 @endsection

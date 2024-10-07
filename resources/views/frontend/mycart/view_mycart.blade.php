@@ -83,7 +83,7 @@
 
                                 </table>
                             </div>
-                            <a href="#" class="mb-20 btn w-100">Proceed To CheckOut<i
+                            <a href="{{ route('checkout') }}" class="mb-20 btn w-100">Proceed To CheckOut<i
                                     class="fi-rs-sign-out ml-15"></i></a>
                         </div>
                     </div>

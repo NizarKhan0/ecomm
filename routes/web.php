@@ -170,7 +170,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/edit/district/{id}', 'EditDistrict')->name('edit.district');
         Route::put('/update/district', 'UpdateDistrict')->name('update.district');
         Route::delete('/delete/district/{id}', 'DeleteDistrict')->name('delete.district');
-        // Route::get('/district/ajax/{division_id}' , 'GetDistrict');
+        Route::get('/district/ajax/{division_id}' , 'GetDistrict');
 
         Route::get('/all/state', 'AllState')->name('all.state');
         Route::get('/add/state', 'AddState')->name('add.state');
@@ -250,6 +250,20 @@ Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
 Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
 Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
 
+//Checkout Page Route
+Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
+
+// Cart All Route
+Route::controller(CartController::class)->group(function () {
+    Route::get('/mycart', 'MyCart')->name('mycart');
+    Route::get('/get-cart-product', 'GetCartProduct');
+    Route::get('/cart-remove/{rowId}', 'CartRemove');
+
+    Route::get('/cart-decrement/{rowId}', 'CartDecrement');
+    Route::get('/cart-increment/{rowId}', 'CartIncrement');
+});
+
+
 Route::middleware(['auth', 'role:user'])->group(function () {
 
     // Wishlist All Route
@@ -266,15 +280,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         Route::get('/compare-remove/{id}', 'CompareRemove');
     });
 
-    // Cart All Route
-    Route::controller(CartController::class)->group(function () {
-        Route::get('/mycart', 'MyCart')->name('mycart');
-        Route::get('/get-cart-product', 'GetCartProduct');
-        Route::get('/cart-remove/{rowId}', 'CartRemove');
 
-        Route::get('/cart-decrement/{rowId}', 'CartDecrement');
-        Route::get('/cart-increment/{rowId}', 'CartIncrement');
-    });
 });
 
 

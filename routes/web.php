@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CompareController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\CouponController;
@@ -16,9 +17,9 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\ShippingAreaController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\Backend\ShippingAreaController;
 use App\Http\Controllers\Backend\VendorProductController;
 
 //Homepage
@@ -242,6 +243,17 @@ Route::post('/dcart/data/store/{id}', [CartController::class, 'AddToCartDetails'
 
 //Add To WishList
 Route::post('/add-to-wishlist/{product_id}', [WishlistController::class, 'AddToWishList']);
+
+//Checkout Route
+Route::controller(CheckoutController::class)->group(function(){
+    Route::get('/district-get/ajax/{division_id}' , 'DistrictGetAjax');
+    Route::get('/state-get/ajax/{districts_id}' , 'StateGetAjax');
+    Route::post('/checkout/store' , 'CheckoutStore')->name('checkout.store');
+
+});
+
+
+
 /// Add to Compare
 Route::post('/add-to-compare/{product_id}', [CompareController::class, 'AddToCompare']);
 

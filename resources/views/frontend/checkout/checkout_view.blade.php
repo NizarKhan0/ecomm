@@ -1,5 +1,8 @@
 @extends('frontend.master_dashboard')
 @section('main')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
@@ -27,50 +30,11 @@
 
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <input type="text" required="" name="fname" placeholder="User Name *">
+                                <input type="text" required="" name="shipping_name" value="{{ Auth::user()->name }}">
                             </div>
                             <div class="form-group col-lg-6">
-                                <input type="email" required="" name="lname" placeholder="Email *">
-                            </div>
-                        </div>
-
-
-
-                        <div class="row shipping_calculator">
-                            <div class="form-group col-lg-6">
-                                <div class="custom_select">
-                                    <select class="form-control select-active">
-                                        <option value="">Select an option...</option>
-                                        <option value="AX">Aland Islands</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <input required="" type="text" name="city" placeholder="Phone*">
-                            </div>
-                        </div>
-
-                        <div class="row shipping_calculator">
-                            <div class="form-group col-lg-6">
-                                <div class="custom_select">
-                                    <select class="form-control select-active">
-                                        <option value="">Select an option...</option>
-                                        <option value="AX">Aland Islands</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <input required="" type="text" name="city" placeholder="Post Code *">
+                                <input type="email" required="" name="shipping_email"
+                                    value="{{ Auth::user()->email }}">
                             </div>
                         </div>
 
@@ -78,31 +42,53 @@
                         <div class="row shipping_calculator">
                             <div class="form-group col-lg-6">
                                 <div class="custom_select">
-                                    <select class="form-control select-active">
-                                        <option value="">Select an option...</option>
-                                        <option value="AX">Aland Islands</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
+                                    <select name="division_id" class="form-control">
+                                        <option value="">Select Division...</option>
+                                        @foreach ($divisions as $item)
+                                            <option value="{{ $item->id }}">{{ $item->division_name }}</option>
+                                        @endforeach
 
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
-                                <input required="" type="text" name="city" placeholder="Address *">
+                                <input required="" type="text" name="shipping_phone"
+                                    value="{{ Auth::user()->phone }}">
                             </div>
+
+                            <div class="form-group col-lg-6">
+                                <div class="custom_select">
+                                    <select name="districts_id" class="form-control">
+
+
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <input required="" type="text" name="post_code" placeholder="Post Code *">
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <div class="custom_select">
+                                    <select name="states_id" class="form-control">
+
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <input required="" type="text" name="shipping_address" placeholder="Address *"
+                                    value="{{ Auth::user()->address }}">
+                            </div>
+
                         </div>
-
-
-
-
 
                         <div class="form-group mb-30">
-                            <textarea rows="5" placeholder="Additional information"></textarea>
+                            <textarea rows="5" placeholder="Additional information" name="notes"></textarea>
                         </div>
-
-
 
                     </form>
                 </div>
@@ -113,87 +99,51 @@
                 <div class="p-40 border cart-totals ml-30 mb-50">
                     <div class="d-flex align-items-end justify-content-between mb-30">
                         <h4>Your Order</h4>
-                        <h6 class="text-muted">Subtotal</h6>
+
                     </div>
                     <div class="divider-2 mb-30"></div>
                     <div class="table-responsive order_table checkout">
                         <table class="table no-border">
                             <tbody>
 
-                                <tr>
-                                    <td class="image product-thumbnail"><img src="assets/imgs/shop/product-1-1.jpg"
-                                            alt="#"></td>
-                                    <td>
-                                        <h6 class="mb-5 w-160"><a href="shop-product-full.html"
-                                                class="text-heading">Yidarton Women Summer Blue</a></h6></span>
-                                        <div class="product-rate-cover">
+                                @foreach ($carts as $item)
+                                    <tr>
+                                        <td class="image product-thumbnail"><img src="{{ asset($item->options->image) }} "
+                                                alt="#" style="width:50px; height: 50px;"></td>
+                                        <td>
+                                            <h6 class="mb-5 w-160"><a href="shop-product-full.html"
+                                                    class="text-heading">{{ $item->name }}</a></h6></span>
+                                            <div class="product-rate-cover">
 
-                                            <strong>Color : </strong>
-                                            <strong>Size : </strong>
+                                                <strong>Color :{{ $item->options->color }} </strong>
+                                                <strong>Size : {{ $item->options->size }}</strong>
 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h6 class="pl-20 pr-20 text-muted">x 1</h6>
-                                    </td>
-                                    <td>
-                                        <h4 class="text-brand">$13.3</h4>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="image product-thumbnail"><img src="assets/imgs/shop/product-2-1.jpg"
-                                            alt="#"></td>
-                                    <td>
-                                        <h6 class="mb-5 w-160"><a href="shop-product-full.html" class="text-heading">Seeds
-                                                of Change Organic Quinoa</a></h6></span>
-                                        <div class="product-rate-cover">
-
-                                            <strong>Color : </strong>
-                                            <strong>Size : </strong>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h6 class="pl-20 pr-20 text-muted">x 1</h6>
-                                    </td>
-                                    <td>
-                                        <h4 class="text-brand">$15.0</h4>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="image product-thumbnail"><img src="assets/imgs/shop/product-3-1.jpg"
-                                            alt="#"></td>
-                                    <td>
-                                        <h6 class="mb-5 w-160"><a href="shop-product-full.html"
-                                                class="text-heading">Angie’s Boomchickapop Sweet </a></h6></span>
-                                        <div class="product-rate-cover">
-
-                                            <strong>Color : </strong>
-                                            <strong>Size : </strong>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h6 class="pl-20 pr-20 text-muted">x 1</h6>
-                                    </td>
-                                    <td>
-                                        <h4 class="text-brand">$17.2</h4>
-                                    </td>
-                                </tr>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="pl-20 pr-20 text-muted">x {{ $item->qty }}</h6>
+                                        </td>
+                                        <td>
+                                            <h4 class="text-brand">${{ $item->price }}</h4>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
 
 
-
-
                         <table class="table no-border">
                             <tbody>
+
+                                <tr>
+                                    @if (Session::has('coupon'))
+                                </tr>
                                 <tr>
                                     <td class="cart_total_label">
                                         <h6 class="text-muted">Subtotal</h6>
                                     </td>
                                     <td class="cart_total_amount">
-                                        <h4 class="text-brand text-end">$12.31</h4>
+                                        <h4 class="text-brand text-end">${{ $cartTotal }}</h4>
                                     </td>
                                 </tr>
 
@@ -202,7 +152,8 @@
                                         <h6 class="text-muted">Coupn Name</h6>
                                     </td>
                                     <td class="cart_total_amount">
-                                        <h6 class="text-brand text-end">EASYLEA</h6>
+                                        <h6 class="text-brand text-end">{{ session()->get('coupon')['coupon_name'] }} (
+                                            {{ session()->get('coupon')['coupon_discount'] }}% ) </h6>
                                     </td>
                                 </tr>
 
@@ -211,7 +162,8 @@
                                         <h6 class="text-muted">Coupon Discount</h6>
                                     </td>
                                     <td class="cart_total_amount">
-                                        <h4 class="text-brand text-end">$12.31</h4>
+                                        <h4 class="text-brand text-end">${{ session()->get('coupon')['discount_amount'] }}
+                                        </h4>
                                     </td>
                                 </tr>
 
@@ -220,50 +172,134 @@
                                         <h6 class="text-muted">Grand Total</h6>
                                     </td>
                                     <td class="cart_total_amount">
-                                        <h4 class="text-brand text-end">$12.31</h4>
+                                        <h4 class="text-brand text-end">${{ session()->get('coupon')['total_amount'] }}
+                                        </h4>
                                     </td>
                                 </tr>
+                            @else
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Grand Total </h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end">${{ $cartTotal }}</h4>
+                                    </td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
 
-
-
-
-
                     </div>
                 </div>
-                <div class="payment ml-30">
-                    <h4 class="mb-30">Payment</h4>
-                    <div class="payment_option">
-                        <div class="custome-radio">
-                            <input class="form-check-input" required="" type="radio" name="payment_option"
-                                id="exampleRadios3" checked="">
-                            <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse"
-                                data-target="#bankTranfer" aria-controls="bankTranfer">Direct Bank Transfer</label>
+
+
+                <div class="row">
+                    <h4 class="mb-30">Billing Details</h4>
+
+                    <form method="post" action="{{ route('checkout.store') }}">
+                        @csrf
+
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <div class="payment ml-30">
+                                    <h4 class="mb-30">Payment</h4>
+                                    <div class="payment_option">
+                                        <div class="custome-radio">
+
+                                            <input class="form-check-input" required="" type="radio"
+                                                name="payment_option" value="stripe" id="exampleRadios3" checked="">
+
+                                            <label class="form-check-label" for="exampleRadios3"
+                                                data-bs-toggle="collapse" data-target="#bankTranfer"
+                                                aria-controls="bankTranfer">Stripe</label>
+                                        </div>
+                                        <div class="custome-radio">
+
+                                            <input class="form-check-input" required="" type="radio"
+                                                name="payment_option" value="cash" id="exampleRadios4" checked="">
+
+                                            <label class="form-check-label" for="exampleRadios4"
+                                                data-bs-toggle="collapse" data-target="#checkPayment"
+                                                aria-controls="checkPayment">Cash on delivery</label>
+                                        </div>
+                                        <div class="custome-radio">
+                                            <input class="form-check-input" value="card" required="" type="radio"
+                                                name="payment_option" id="exampleRadios5" checked="">
+
+                                            <label class="form-check-label" for="exampleRadios5"
+                                                data-bs-toggle="collapse" data-target="#paypal"
+                                                aria-controls="paypal">Online Getway</label>
+                                        </div>
+                                    </div>
+                                    <div class="payment-logo d-flex">
+                                        <img class="mr-15"
+                                            src="{{ asset('frontend/assets/imgs/theme/icons/payment-paypal.svg') }}"
+                                            alt="">
+                                        <img class="mr-15"
+                                            src="{{ asset('frontend/assets/imgs/theme/icons/payment-visa.svg') }}"
+                                            alt="">
+                                        <img class="mr-15"
+                                            src="{{ asset('frontend/assets/imgs/theme/icons/payment-master.svg') }}"
+                                            alt="">
+                                        <img src="{{ asset('frontend/assets/imgs/theme/icons/payment-zapper.svg') }}"
+                                            alt="">
+                                    </div>
+                                    <button type="submit" class="btn btn-fill-out btn-block mt-30">Place an Order<i
+                                            class="fi-rs-sign-out ml-15"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="custome-radio">
-                            <input class="form-check-input" required="" type="radio" name="payment_option"
-                                id="exampleRadios4" checked="">
-                            <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse"
-                                data-target="#checkPayment" aria-controls="checkPayment">Cash on delivery</label>
-                        </div>
-                        <div class="custome-radio">
-                            <input class="form-check-input" required="" type="radio" name="payment_option"
-                                id="exampleRadios5" checked="">
-                            <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse"
-                                data-target="#paypal" aria-controls="paypal">Online Getway</label>
-                        </div>
-                    </div>
-                    <div class="payment-logo d-flex">
-                        <img class="mr-15" src="assets/imgs/theme/icons/payment-paypal.svg" alt="">
-                        <img class="mr-15" src="assets/imgs/theme/icons/payment-visa.svg" alt="">
-                        <img class="mr-15" src="assets/imgs/theme/icons/payment-master.svg" alt="">
-                        <img src="assets/imgs/theme/icons/payment-zapper.svg" alt="">
-                    </div>
-                    <a href="#" class="btn btn-fill-out btn-block mt-30">Place an Order<i
-                            class="fi-rs-sign-out ml-15"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+                    </form>
+                @endsection
+
+                <script>
+                    $(document).ready(function() {
+                        // Handle division change
+                        $('select[name="division_id"]').on('change', function() {
+                            var division_id = $(this).val();
+                            if (division_id) {
+                                $.ajax({
+                                    url: "{{ url('/district-get/ajax') }}/" + division_id,
+                                    type: "GET",
+                                    dataType: "json",
+                                    success: function(data) {
+                                        var districtsDropdown = $('select[name="districts_id"]').empty();
+                                        $.each(data, function(key, value) {
+                                            districtsDropdown.append('<option value="' + value.id +
+                                                '">' + value.districts_name + '</option>');
+                                        });
+                                    },
+                                    error: function() {
+                                        alert('Failed to retrieve districts data.');
+                                    }
+                                });
+                            } else {
+                                alert('Please select a division.');
+                            }
+                        });
+
+                        // Handle district change
+                        $('select[name="districts_id"]').on('change', function() {
+                            var districts_id = $(this).val();
+                            if (districts_id) {
+                                $.ajax({
+                                    url: "{{ url('/state-get/ajax') }}/" + districts_id,
+                                    type: "GET",
+                                    dataType: "json",
+                                    success: function(data) {
+                                        var stateDropdown = $('select[name="state_id"]').empty();
+                                        $.each(data, function(key, value) {
+                                            stateDropdown.append('<option value="' + value.id +
+                                                '">' + value.state_name + '</option>');
+                                        });
+                                    },
+                                    error: function() {
+                                        alert('Failed to retrieve state data.');
+                                    }
+                                });
+                            } else {
+                                alert('Please select a district.');
+                            }
+                        });
+                    });
+                </script>

@@ -21,9 +21,6 @@ class StripeController extends Controller
             $total_amount = round(Cart::total());
         }
 
-        \Stripe\Stripe::setApiKey('sk_test_51IUTWzALc6pn5BvMjaRW9STAvY4pLiq1dNViHoh5KtqJc9Bx7d4WKlCcEdHOJdg3gCcC2F19cDxUmCBJekGSZXte00RN2Fc4vm');
-
-
         $token = $_POST['stripeToken'];
 
         $charge = \Stripe\Charge::create([

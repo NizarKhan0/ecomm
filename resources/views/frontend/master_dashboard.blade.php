@@ -25,6 +25,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+    {{-- <script src="https://js.stripe.com/v3/"></script> --}}
+
     <!-- SweetAlert CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -138,6 +140,7 @@
                     $('#pcategory').text(data.product.category.category_name);
                     $('#pbrand').text(data.product.brand.brand_name);
                     $('#pimage').attr('src', '/' + data.product.product_thumbnail);
+                    // $('#pvendor_id').text(data.product.vendor_id);
 
                     $('#product_id').val(id);
                     $('#qty').val(1);
@@ -198,6 +201,7 @@
         function addToCart() {
             var product_name = $('#pname').text();
             var id = $('#product_id').val();
+            // var vendor = $('#pvendor_id').text();
             var size = $('#size option:selected').val();
             var color = $('#color option:selected').val();
             var quantity = $('#qty').val();
@@ -327,6 +331,7 @@
         function addToCartDetails() {
             var product_name = $('#dpname').text();
             var id = $('#dproduct_id').val();
+            // var vendor = $('#vproduct_id').val();
             var color = $('#dcolor option:selected').text();
             var size = $('#dsize option:selected').text();
             var quantity = $('#dqty').val();
@@ -339,7 +344,7 @@
                     size: size,
                     quantity: quantity,
                     product_name: product_name
-
+                    // vendor:vendor
                 },
                 url: "/dcart/data/store/" + id,
                 success: function(data) {

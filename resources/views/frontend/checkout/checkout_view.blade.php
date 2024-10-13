@@ -263,7 +263,8 @@
                                     type: "GET",
                                     dataType: "json",
                                     success: function(data) {
-                                        var districtsDropdown = $('select[name="districts_id"]').empty();
+                                        // var districtsDropdown = $('select[name="districts_id"]').empty();
+                                        var districtsDropdown = $('select[name="state_id"]').empty();
                                         $.each(data, function(key, value) {
                                             districtsDropdown.append('<option value="' + value.id +
                                                 '">' + value.districts_name + '</option>');

@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\CompareController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\CartController;
@@ -252,6 +253,14 @@ Route::controller(CheckoutController::class)->group(function(){
 
 });
 
+
+ // Stripe All Route
+ Route::controller(StripeController::class)->group(function(){
+    Route::post('/stripe/order' , 'StripeOrder')->name('stripe.order');
+    Route::post('/cash/order' , 'CashOrder')->name('cash.order');
+
+
+});
 
 
 /// Add to Compare

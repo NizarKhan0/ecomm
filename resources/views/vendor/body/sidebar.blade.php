@@ -53,6 +53,8 @@
                 </li>
                 <li> <a href="app-chat-box.html"><i class="bx bx-right-arrow-alt"></i>Chat Box</a>
                 </li>
+                <li> <a href="{{ route('vendor.order') }}"><i class="bx bx-right-arrow-alt"></i>Vendor Order</a>
+                </li>
             </ul>
         </li>
 

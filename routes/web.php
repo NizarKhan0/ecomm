@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\CompareController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\WishlistController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\VendorOrderController;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\ShippingAreaController;
 use App\Http\Controllers\Backend\VendorProductController;
@@ -258,6 +260,20 @@ Route::controller(CheckoutController::class)->group(function(){
  Route::controller(StripeController::class)->group(function(){
     Route::post('/stripe/order' , 'StripeOrder')->name('stripe.order');
     Route::post('/cash/order' , 'CashOrder')->name('cash.order');
+
+
+});
+
+ // Admin Order All Route
+ Route::controller(OrderController::class)->group(function(){
+    Route::get('/pending/order' , 'PendingOrder')->name('pending.order');
+
+
+});
+
+// Vendor Order All Route
+Route::controller(VendorOrderController::class)->group(function(){
+    Route::get('/vendor/order' , 'VendorOrder')->name('vendor.order');
 
 
 });

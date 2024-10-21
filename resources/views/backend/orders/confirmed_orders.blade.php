@@ -3,13 +3,13 @@
     <div class="page-content">
         <!--breadcrumb-->
         <div class="mb-3 page-breadcrumb d-none d-sm-flex align-items-center">
-            <div class="breadcrumb-title pe-3">All Pending Order</div>
+            <div class="breadcrumb-title pe-3">All Confirmed Order</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="p-0 mb-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">All Pending Order</li>
+                        <li class="breadcrumb-item active" aria-current="page">All Confirmed Order</li>
                     </ol>
                 </nav>
             </div>
@@ -48,7 +48,8 @@
                                     <td> <span class="badge rounded-pill bg-success"> {{ $item->status }}</span></td>
 
                                     <td>
-                                        <a href="{{ route('admin.order.details',$item->id) }}" class="btn btn-info" title="Details"><i class="fa fa-eye"></i> </a>
+                                        <a href="{{ route('admin.order.details', $item->id) }}" class="btn btn-info"
+                                            title="Details"><i class="fa fa-eye"></i> </a>
 
 
                                     </td>

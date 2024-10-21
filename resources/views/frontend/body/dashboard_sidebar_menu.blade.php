@@ -14,6 +14,10 @@
                     href="{{ route('user.order.page') }}"><i class="mr-10 fi-rs-shopping-bag"></i>Orders</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ $route == 'return.order.page' ? 'active' : '' }}"
+                    href="{{ route('return.order.page') }}"><i class="mr-10 fi-rs-shopping-bag"></i>Return Orders</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#track-orders"><i class="mr-10 fi-rs-shopping-cart-check"></i>Track Your
                     Order</a>
             </li>

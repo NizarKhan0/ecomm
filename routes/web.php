@@ -7,7 +7,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\StripeController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\User\AllUserController;
 use App\Http\Controllers\User\CompareController;
 use App\Http\Controllers\Backend\BrandController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ActiveUserController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorOrderController;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
@@ -277,8 +280,8 @@ Route::controller(OrderController::class)->group(function () {
 // Return Order All Route
 Route::controller(ReturnController::class)->group(function () {
     Route::get('/return/request', 'ReturnRequest')->name('return.request');
-    Route::get('/return/request/approved/{order_id}' , 'ReturnRequestApproved')->name('return.request.approved');
-    Route::get('/complete/return/request' , 'CompleteReturnRequest')->name('complete.return.request');
+    Route::get('/return/request/approved/{order_id}', 'ReturnRequestApproved')->name('return.request.approved');
+    Route::get('/complete/return/request', 'CompleteReturnRequest')->name('complete.return.request');
 });
 
 
@@ -286,24 +289,66 @@ Route::controller(ReturnController::class)->group(function () {
 // Vendor Order All Route
 Route::controller(VendorOrderController::class)->group(function () {
     Route::get('/vendor/order', 'VendorOrder')->name('vendor.order');
-    Route::get('/vendor/return/order' , 'VendorReturnOrder')->name('vendor.return.order');
-    Route::get('/vendor/complete/return/order' , 'VendorCompleteReturnOrder')->name('vendor.complete.return.order');
-    Route::get('/vendor/order/details/{order_id}' , 'VendorOrderDetails')->name('vendor.order.details');
+    Route::get('/vendor/return/order', 'VendorReturnOrder')->name('vendor.return.order');
+    Route::get('/vendor/complete/return/order', 'VendorCompleteReturnOrder')->name('vendor.complete.return.order');
+    Route::get('/vendor/order/details/{order_id}', 'VendorOrderDetails')->name('vendor.order.details');
 });
 
 
 
- // Report All Route
- Route::controller(ReportController::class)->group(function(){
-    Route::get('/report/view' , 'ReportView')->name('report.view');
-    Route::post('/search/by/date' , 'SearchByDate')->name('search-by-date');
-    Route::post('/search/by/month' , 'SearchByMonth')->name('search-by-month');
-    Route::post('/search/by/year' , 'SearchByYear')->name('search-by-year');
-    Route::get('/order/by/user' , 'OrderByUser')->name('order.by.user');
-    Route::post('/search/by/user' , 'SearchByUser')->name('search-by-user');
-
+// Report All Route
+Route::controller(ReportController::class)->group(function () {
+    Route::get('/report/view', 'ReportView')->name('report.view');
+    Route::post('/search/by/date', 'SearchByDate')->name('search-by-date');
+    Route::post('/search/by/month', 'SearchByMonth')->name('search-by-month');
+    Route::post('/search/by/year', 'SearchByYear')->name('search-by-year');
+    Route::get('/order/by/user', 'OrderByUser')->name('order.by.user');
+    Route::post('/search/by/user', 'SearchByUser')->name('search-by-user');
 });
 
+
+// Active user and vendor All Route
+Route::controller(ActiveUserController::class)->group(function () {
+
+    Route::get('/all/user', 'AllUser')->name('all-user');
+    Route::get('/all/vendor', 'AllVendor')->name('all-vendor');
+});
+
+
+// Blog Post All Route
+Route::controller(BlogController::class)->group(function () {
+
+    Route::get('/admin/blog/post', 'AllBlogPost')->name('admin.blog.post');
+    Route::get('/admin/add/blog/post', 'AddBlogPost')->name('add.blog.post');
+    Route::post('/admin/store/blog/post' , 'StoreBlogPost')->name('store.blog.post');
+    Route::get('/admin/edit/blog/post/{id}' , 'EditBlogPost')->name('edit.blog.post');
+    Route::post('/admin/update/blog/post' , 'UpdateBlogPost')->name('update.blog.post');
+    Route::get('/admin/delete/blog/post/{id}' , 'DeleteBlogPost')->name('delete.blog.post');
+});
+
+
+// Frontend Blog Post All Route
+Route::controller(BlogController::class)->group(function(){
+
+    Route::get('/blog' , 'AllBlog')->name('home.blog');
+    Route::get('/post/details/{id}/{slug}' , 'BlogDetails');
+    Route::get('/post/details/{id}/{slug}' , 'BlogDetails');
+    Route::get('/post/category/{id}/{slug}' , 'BlogPostCategory');
+   });
+
+
+   Route::controller(ReviewController::class)->group(function(){
+
+    Route::post('/store/review' , 'StoreReview')->name('store.review');
+    Route::get('/pending/review' , 'PendingReview')->name('pending.review');
+    Route::get('/review/approve/{id}' , 'ReviewApprove')->name('review.approve');
+    Route::get('/review/approve/{id}' , 'ReviewApprove')->name('review.approve');
+    Route::get('/publish/review' , 'PublishReview')->name('publish.review');
+    Route::get('/review/delete/{id}' , 'ReviewDelete')->name('review.delete');
+
+    Route::get('/vendor/all/review' , 'VendorAllReview')->name('vendor.all.review');
+
+   });
 
 
 // User Dashboard All Route

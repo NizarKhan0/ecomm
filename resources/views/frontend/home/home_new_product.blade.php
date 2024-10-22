@@ -190,62 +190,87 @@
 
                                         <h2><a href="shop-product-right.html"> {{ $product->product_name }} </a></h2>
 
+                                        @php
+                                            $reviewcount = App\Models\Review::where('product_id', $product->id)
+                                                ->where('status', 1)
+                                                ->latest()
+                                                ->get();
+                                            $avarage = App\Models\Review::where('product_id', $product->id)
+                                                ->where('status', 1)
+                                                ->avg('rating');
+                                        @endphp
+
                                         <div class="product-rate-cover">
                                             <div class="product-rate d-inline-block">
                                                 <div class="product-rating" style="width: 90%"></div>
                                             </div>
-                                            <span class="ml-5 font-small text-muted"> (4.0)</span>
+
+                                            @if ($avarage == 0)
+                                            @elseif($avarage == 1 || $avarage < 2)
+                                                <div class="product-rating" style="width: 20%"></div>
+                                            @elseif($avarage == 2 || $avarage < 3)
+                                                <div class="product-rating" style="width: 40%"></div>
+                                            @elseif($avarage == 3 || $avarage < 4)
+                                                <div class="product-rating" style="width: 60%"></div>
+                                            @elseif($avarage == 4 || $avarage < 5)
+                                                <div class="product-rating" style="width: 80%"></div>
+                                            @elseif($avarage == 5 || $avarage < 5)
+                                                <div class="product-rating" style="width: 100%"></div>
+                                            @endif
                                         </div>
 
-                                        <div>
-                                            @if ($product->vendor_id == null)
-                                                <span class="font-small text-muted">By <a
-                                                        href="vendor-details-1.html">Owner</a></span>
-                                            @else
-                                                <span class="font-small text-muted">By <a
-                                                        href="vendor-details-1.html">{{ $product->vendor->name }}</a></span>
-                                            @endif
+                                        <span class="ml-5 font-small text-muted"> (4.0)</span>
+                                    </div>
 
-                                        </div>
+                                    <div>
+                                        @if ($product->vendor_id == null)
+                                            <span class="font-small text-muted">By <a
+                                                    href="vendor-details-1.html">Owner</a></span>
+                                        @else
+                                            <span class="font-small text-muted">By <a
+                                                    href="vendor-details-1.html">{{ $product->vendor->name }}</a></span>
+                                        @endif
 
-                                        <div class="product-card-bottom">
+                                    </div>
 
-                                            @if ($product->discount_price == null)
-                                                <div class="product-price">
-                                                    <span>${{ $product->selling_price }}</span>
+                                    <div class="product-card-bottom">
 
-                                                </div>
-                                            @else
-                                                <div class="product-price">
-                                                    <span>${{ $product->discount_price }}</span>
-                                                    <span class="old-price">${{ $product->selling_price }}</span>
-                                                </div>
-                                            @endif
+                                        @if ($product->discount_price == null)
+                                            <div class="product-price">
+                                                <span>${{ $product->selling_price }}</span>
 
-
-
-                                            <div class="add-cart">
-                                                <a class="add" href="shop-cart.html"><i
-                                                        class="mr-5 fi-rs-shopping-cart"></i>Add </a>
                                             </div>
+                                        @else
+                                            <div class="product-price">
+                                                <span>${{ $product->discount_price }}</span>
+                                                <span class="old-price">${{ $product->selling_price }}</span>
+                                            </div>
+                                        @endif
+
+
+
+                                        <div class="add-cart">
+                                            <a class="add" href="shop-cart.html"><i
+                                                    class="mr-5 fi-rs-shopping-cart"></i>Add </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--end product card-->
-
-                        @empty
-
-                            <h5 class="text-danger"> No Product Found </h5>
-                        @endforelse
-
                     </div>
-                    <!--End product-grid-4-->
-                </div>
-                <!--En tab two-->
-            @endforeach
+                    <!--end product card-->
+
+                @empty
+
+                    <h5 class="text-danger"> No Product Found </h5>
+            @endforelse
 
         </div>
-        <!--End tab-content-->
+        <!--End product-grid-4-->
+    </div>
+    <!--En tab two-->
+    @endforeach
+
+    </div>
+    <!--End tab-content-->
     </div>
 </section>

@@ -350,7 +350,7 @@
                                 @endforeach
 
                                 <li>
-                                    <a href="#">Contact</a>
+                                    <a href="{{ route('home.blog') }}">Blog</a>
                                 </li>
                             </ul>
                         </nav>

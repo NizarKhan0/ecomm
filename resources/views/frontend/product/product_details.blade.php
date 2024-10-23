@@ -6,6 +6,9 @@
         $categories = App\Models\Category::orderBy('category_name', 'ASC')->get();
     @endphp
 
+@section('title')
+    {{ $product->product_name }}
+@endsection
 
     <div class="page-header breadcrumb-wrap">
         <div class="container">

@@ -3,9 +3,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Nest - Multipurpose eCommerce HTML Template</title>
+    <title> @yield('title')</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="description" content="" />
+    <meta name="title" content="{{ $seo->meta_title }}" />
+    <meta name="author" content="{{ $seo->meta_author }}" />
+    <meta name="keywords" content="{{ $seo->meta_keyword }}" />
+    <meta name="description" content="{{ $seo->meta_description }}" />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -966,6 +969,38 @@
 
     <!--  ////////////// End Apply Coupon ////////////// -->
 
+
+    <script>
+        const site_url = "http://127.0.0.1:8000/";
+
+        $("body").on("keyup", "#search", function() {
+
+            let text = $("#search").val();
+            //console.log(text);
+
+            if (text.length > 0) {
+                $.ajax({
+                    data: {
+                        search: text
+                    },
+                    url: site_url + "search-product",
+                    method: 'post',
+                    beforSend: function(request) {
+                        return request.setRequestHeader('X-CSRF-TOKEN', ("meta[name='csrf-token']"))
+                    },
+
+                    success: function(result) {
+                        $("#searchProducts").html(result);
+
+                    }
+                }); //End Ajax
+
+            } // end if
+
+            if (text.length < 1) $("#searchProducts").html("");
+
+        });
+    </script>
 </body>
 
 </html>

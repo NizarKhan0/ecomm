@@ -25,6 +25,7 @@ use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ActiveUserController;
+use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorOrderController;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
@@ -37,7 +38,14 @@ use App\Http\Controllers\Backend\VendorProductController;
 // });
 
 
-Route::get('/', [IndexController::class, 'Index']);
+// Route::get('/', [IndexController::class, 'Index']);
+
+Route::controller(IndexController::class)->group(function(){
+
+    Route::get('/' , 'Index');
+    Route::post('/search' , 'ProductSearch')->name('product.search');
+    Route::post('/search-product' , 'SearchProduct');
+   });
 
 //Auth
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login')->middleware(RedirectIfAuthenticated::class);
@@ -124,6 +132,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
         Route::put('/update/product', 'UpdateProduct')->name('update.product');
         Route::delete('/delete/product/{id}', 'DeleteProduct')->name('delete.product');
+
+
+        // For Product Stock
+        Route::get('/product/stock', 'ProductStock')->name('product.stock');
+
 
         Route::patch('/update/product/thumbnail', 'UpdateProductThumbnail')->name('update.product.thumbnail');
         Route::patch('/update/product/multiimage', 'UpdateProductMultiImage')->name('update.product.multi.image');
@@ -274,6 +287,9 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('/admin/invoice/download/{order_id}', 'AdminInvoiceDownload')->name('admin.invoice.download');
     Route::post('/return/order/{order_id}', 'ReturnOrder')->name('return.order');
     Route::get('/return/order/page', 'ReturnOrderPage')->name('return.order.page');
+    // Order Tracking
+    Route::get('/user/track/order', 'UserTrackOrder')->name('user.track.order');
+    Route::post('/order/tracking' , 'OrderTracking')->name('order.tracking');
 });
 
 
@@ -320,35 +336,45 @@ Route::controller(BlogController::class)->group(function () {
 
     Route::get('/admin/blog/post', 'AllBlogPost')->name('admin.blog.post');
     Route::get('/admin/add/blog/post', 'AddBlogPost')->name('add.blog.post');
-    Route::post('/admin/store/blog/post' , 'StoreBlogPost')->name('store.blog.post');
-    Route::get('/admin/edit/blog/post/{id}' , 'EditBlogPost')->name('edit.blog.post');
-    Route::post('/admin/update/blog/post' , 'UpdateBlogPost')->name('update.blog.post');
-    Route::get('/admin/delete/blog/post/{id}' , 'DeleteBlogPost')->name('delete.blog.post');
+    Route::post('/admin/store/blog/post', 'StoreBlogPost')->name('store.blog.post');
+    Route::get('/admin/edit/blog/post/{id}', 'EditBlogPost')->name('edit.blog.post');
+    Route::post('/admin/update/blog/post', 'UpdateBlogPost')->name('update.blog.post');
+    Route::get('/admin/delete/blog/post/{id}', 'DeleteBlogPost')->name('delete.blog.post');
 });
 
 
 // Frontend Blog Post All Route
-Route::controller(BlogController::class)->group(function(){
+Route::controller(BlogController::class)->group(function () {
 
-    Route::get('/blog' , 'AllBlog')->name('home.blog');
-    Route::get('/post/details/{id}/{slug}' , 'BlogDetails');
-    Route::get('/post/details/{id}/{slug}' , 'BlogDetails');
-    Route::get('/post/category/{id}/{slug}' , 'BlogPostCategory');
-   });
+    Route::get('/blog', 'AllBlog')->name('home.blog');
+    Route::get('/post/details/{id}/{slug}', 'BlogDetails');
+    Route::get('/post/details/{id}/{slug}', 'BlogDetails');
+    Route::get('/post/category/{id}/{slug}', 'BlogPostCategory');
+});
 
 
-   Route::controller(ReviewController::class)->group(function(){
+Route::controller(ReviewController::class)->group(function () {
 
-    Route::post('/store/review' , 'StoreReview')->name('store.review');
-    Route::get('/pending/review' , 'PendingReview')->name('pending.review');
-    Route::get('/review/approve/{id}' , 'ReviewApprove')->name('review.approve');
-    Route::get('/review/approve/{id}' , 'ReviewApprove')->name('review.approve');
-    Route::get('/publish/review' , 'PublishReview')->name('publish.review');
-    Route::get('/review/delete/{id}' , 'ReviewDelete')->name('review.delete');
+    Route::post('/store/review', 'StoreReview')->name('store.review');
+    Route::get('/pending/review', 'PendingReview')->name('pending.review');
+    Route::get('/review/approve/{id}', 'ReviewApprove')->name('review.approve');
+    Route::get('/review/approve/{id}', 'ReviewApprove')->name('review.approve');
+    Route::get('/publish/review', 'PublishReview')->name('publish.review');
+    Route::get('/review/delete/{id}', 'ReviewDelete')->name('review.delete');
 
-    Route::get('/vendor/all/review' , 'VendorAllReview')->name('vendor.all.review');
+    Route::get('/vendor/all/review', 'VendorAllReview')->name('vendor.all.review');
 
-   });
+});
+
+// Site Setting All Route
+Route::controller(SiteSettingController::class)->group(function () {
+
+    Route::get('/site/setting', 'SiteSetting')->name('site.setting');
+    Route::post('/site/setting/update', 'SiteSettingUpdate')->name('site.setting.update');
+    Route::get('/seo/setting', 'SeoSetting')->name('seo.setting');
+    Route::post('/seo/setting/update', 'SeoSettingUpdate')->name('seo.setting.update');
+
+});
 
 
 // User Dashboard All Route

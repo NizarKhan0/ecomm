@@ -1,6 +1,9 @@
 @extends('frontend.master_dashboard')
 @section('main')
 
+@section('title')
+   Wishlist
+@endsection
 
     <div class="page-header breadcrumb-wrap">
         <div class="container">
